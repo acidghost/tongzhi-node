@@ -5,7 +5,8 @@
 var _ = require('underscore'),
     log = require('captains-log'),
     url = require('url'),
-    http = require('http');
+    http = require('http'),
+    events = new (require('events')).EventEmitter();
 
 // Load configurations
 var config = require('./config');
@@ -45,9 +46,10 @@ global = {
   config: config,
   _: _,
   log: log,
+  events: events,
   url: url,
   http: http
-}
+};
 
 var FacebookService = require('./services/facebook');
 var fbService = new FacebookService();
@@ -63,3 +65,7 @@ var server = http.createServer(function(req, res) {
 
 });
 server.listen(process.env.port || config.port || 3737);
+
+events.on('hasFbToken', function() {
+  log.silly('has token');
+});

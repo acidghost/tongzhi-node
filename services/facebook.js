@@ -6,6 +6,7 @@ var graph = require('fbgraph'),
 
     config = global.config,
     log = global.log,
+    events = global.events,
     url = global.url,
     http = global.http;
 
@@ -52,6 +53,7 @@ FacebookService.prototype = {
         }
         log.info('Facebook access token: ', facebookRes);
         graph.setAccessToken(facebookRes.access_token);
+        events.emit('hasFbToken');
         res.writeHead(201);
         res.end();
       });
