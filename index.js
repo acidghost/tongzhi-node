@@ -68,4 +68,15 @@ server.listen(process.env.port || config.port || 3737);
 
 events.on('hasFbToken', function() {
   log.silly('has token');
+
+  var checkFacebook = function() {
+    fbService.getUnseenLikes();
+  };
+  checkFacebook();
+  setInterval(checkFacebook, 1000 * 60);
+
+  // This event is fired when unseen likes have been retrieved
+  events.on('fbUnseenLikes', function(data) {
+    log.debug('Debugging fbUnseenLikes: ', data);
+  })
 });

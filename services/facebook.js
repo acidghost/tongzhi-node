@@ -59,6 +59,30 @@ FacebookService.prototype = {
       });
     }
 
+  },
+
+  getUnseenLikes: function () {
+
+    graph.get('/me/notifications?fields=application,title,unread&include_read=false', { limit: 50 }, function (err, res) {
+      if (err) {
+        log.error(err);
+      } else {
+        var results = [];
+        for (var i in res.data) {
+          if(res.data[i].application.name == 'Likes') {
+            log.debug('Logging res.data['+i+']: ', res.data[i]);
+            results.push({
+              id: res.data[i].id,
+              title: res.data[i].title,
+              app: res.data[i].application.name,
+              unread: res.data[i].unread
+            });
+          }
+        }
+        events.emit('fbUnseenLikes', results);
+      }
+    });
+
   }
 
 };
