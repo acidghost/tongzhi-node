@@ -1,0 +1,19 @@
+{
+  "name": "tongzhi-node",
+  "version": "0.0.0",
+  "description": "An Arduino social (helper) notifier!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acidghost/tongzhi-node.git"
+  },
+  "author": "acidghost <andrea@codeworks-eng.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/acidghost/tongzhi-node/issues"
+  },
+  "homepage": "https://github.com/acidghost/tongzhi-node"
+}
