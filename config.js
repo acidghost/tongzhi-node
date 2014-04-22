@@ -4,7 +4,7 @@
 
 module.exports = {
 
-  logger: 'verbose',
+  logger: 'info',
 
   // Remember to change also the redirecting URLs!
   port: 3737,
