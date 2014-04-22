@@ -3,7 +3,9 @@
  */
 
 var _ = require('underscore'),
-    log = require('captains-log');
+    log = require('captains-log'),
+    url = require('url'),
+    http = require('http');
 
 // Load configurations
 var config = require('./config');
@@ -35,3 +37,27 @@ var config = require('./config');
 })();
 
 log.debug(config);
+
+// Global libs & deps
+global = {
+  config: config,
+  _: _,
+  log: log,
+  url: url,
+  http: http
+}
+
+var FacebookService = require('./services/facebook');
+var fbService = new FacebookService();
+var server = http.createServer(function(req, res) {
+
+  log.verbose('Logging request url: ', req.method + ' ' + req.url);
+  var parsedUrl = url.parse(req.url, true);
+
+  // Facebook authentication
+  if(parsedUrl.pathname == '/auth/facebook' && req.method.toLowerCase() == 'get') {
+    fbService.auth(req, res);
+  }
+
+});
+server.listen(process.env.port || config.port || 3737);
