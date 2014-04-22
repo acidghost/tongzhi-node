@@ -36,7 +36,9 @@ var config = require('./config');
 
 })();
 
-log.debug(config);
+log.info('Welcome to the tongzhi social notifier!!');
+log.info('----------------------------------------');
+log.info('Everything seems set up properly...');
 
 // Global libs & deps
 global = {
