@@ -4,6 +4,7 @@
 
 var _ = require('underscore'),
     log = require('captains-log'),
+    open = require('open');
     url = require('url'),
     http = require('http'),
     events = new (require('events')).EventEmitter();
@@ -37,9 +38,14 @@ var config = require('./config');
 
 })();
 
-log.info('Welcome to the tongzhi social notifier!!');
-log.info('----------------------------------------');
-log.info('Everything seems set up properly...');
+log.info('Welcome to the tongzhi social notifier!'.red);
+log.info('----------------------------------------'.green);
+log.info('#'.green + ' Everything seems set up properly...  '.cyan + '#'.green);
+log.info('----------------------------------------'.green + '\n');
+log.warn('Please, note that the app needs to grant permissions over your Facebook account');
+log.warn('in order to read and manage your notifications.');
+log.warn('Now opening the following URL...\t' + config.facebook.redirect_uri.blue + '\n\n');
+open(config.facebook.redirect_uri);
 
 // Global libs & deps
 global = {
