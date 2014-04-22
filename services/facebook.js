@@ -83,6 +83,37 @@ FacebookService.prototype = {
       }
     });
 
+  },
+
+  getUnreadMessages: function() {
+
+    graph.get('/me/inbox', { limit: 20 }, function (err, res) {
+      if (err) {
+        log.error(err);
+      } else {
+        var results = [];
+        for (var i in res.data) {
+          var currentData = res.data[i];
+          if(currentData.unread) {
+            log.debug('Logging inbox res.data['+i+']: ', currentData.id, currentData.to.data);
+
+            var lastMessage = undefined;
+            if(currentData.comments) {
+              lastMessage = currentData.comments.data.slice(currentData.comments.data.length - 3, currentData.comments.data.length);
+            }
+            results.push({
+              id: res.data[i].id,
+              to: res.data[i].to.data,
+              lastMessage: lastMessage,
+              unseen: res.data[i].unseen,
+              unread: res.data[i].unread
+            });
+          }
+        }
+        events.emit('fbUnreadMessages', results);
+      }
+    });
+
   }
 
 };

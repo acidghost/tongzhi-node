@@ -71,6 +71,7 @@ events.on('hasFbToken', function() {
 
   var checkFacebook = function() {
     fbService.getUnseenLikes();
+    fbService.getUnreadMessages();
   };
   checkFacebook();
   setInterval(checkFacebook, 1000 * 60);
@@ -78,5 +79,10 @@ events.on('hasFbToken', function() {
   // This event is fired when unseen likes have been retrieved
   events.on('fbUnseenLikes', function(data) {
     log.debug('Debugging fbUnseenLikes: ', data);
+  });
+
+  // This event is fired when unread messages have been detected
+  events.on('fbUnreadMessages', function(data) {
+    log.debug('Debugging fbUnreadMessages: ', data);
   })
 });
