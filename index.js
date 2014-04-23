@@ -10,7 +10,6 @@ var _ = require('underscore'),
     http = require('http'),
     events = new (require('events')).EventEmitter(),
     serialport = require('serialport'),
-    SerialPort = serialport.SerialPort,
     readline = require('readline');
 
 // Load configurations
@@ -56,7 +55,7 @@ async.series([
           try {
             var answer = parseInt(answer);
             if(answer > 0 && answer <= ports.length) {
-              config.serialPort = ports[answer-1].comName;
+              config.arduino.serialPort = ports[answer-1].comName;
               log.verbose('Selected serial port: ', config.arduino.serialPort);
               cb(null, null);
             } else {
@@ -101,7 +100,10 @@ async.series([
     events.on('hasFbToken', function() {
 
       var CheckerService = require('./services/checker');
-      var checker = new CheckerService(fbService);
+      new CheckerService(fbService);
+
+      var SerialService = require('./services/serial');
+      new SerialService(new serialport.SerialPort(config.arduino.serialPort));
 
     });
 
