@@ -72,11 +72,9 @@ events.on('hasFbToken', function() {
       return;
 
     if(config.say.enabled) {
-      if(data.length > 1) {
-        spkService.sayPhrase('There are some new Likes on something!');
-      } else {
-        spkService.sayPhrase('There is a new Like on something of yours.');
-      }
+      _.each(data, function(value) {
+        spkService.sayPhrase(value.title);
+      });
     }
   });
 
