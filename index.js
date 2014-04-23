@@ -11,7 +11,7 @@ var _ = require('underscore'),
 
 // Load configurations
 var config = require('./config');
-var configLoader = require('./config.loader');
+var configLoader = require('./config/config.loader.js');
 config = configLoader(config);
 log = log({ level: config.logger });
 

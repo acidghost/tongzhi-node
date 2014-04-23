@@ -26,6 +26,7 @@ node_modules
 
 # Local files
 **/*.local.js
+**/local.js
 
 # idea IDE
 .idea

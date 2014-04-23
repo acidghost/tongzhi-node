@@ -9,7 +9,7 @@ module.exports = function(config) {
 
   var configLocal = undefined;
   try {
-    configLocal = require('./config.local');
+    configLocal = require('./local.js');
   } catch(err) {
     log.warn(err);
   }
