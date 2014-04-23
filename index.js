@@ -103,7 +103,7 @@ events.on('hasFbToken', function() {
           }
         });
         spkService.sayPhrase('Sender' + ((thread.to>1) ? ('s') : ('')) + ' of thread ' + (threadNum+1) + ': ' + senders);
-        if(thread.lastMessage) {
+        if(config.say.readMessages && thread.lastMessage) {
           spkService.sayPhrase(thread.lastMessage[2].from.name + ' writes: ' + thread.lastMessage[2].message);
         }
       });

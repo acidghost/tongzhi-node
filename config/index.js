@@ -19,6 +19,7 @@ module.exports = {
   say: {
     enabled: true,
     voice: 'voice_kal_diphone',
+    readMessages: true,
     translate: true,
     language: 'Italian'
   }
