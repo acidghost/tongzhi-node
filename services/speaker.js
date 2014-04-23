@@ -36,6 +36,9 @@ SpeakerService.prototype = {
 
   sayPhrase: function(text) {
 
+    // Clear the text from quotes because the say module is buggy...
+    text = text.replace(/"/gi, '\'');
+
     if(config.say.translate) {
       this.translate.text({ input: 'English', output: config.say.language }, text, function(err, transText) {
         if(err) {
