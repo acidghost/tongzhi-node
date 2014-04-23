@@ -51,7 +51,7 @@ FacebookService.prototype = {
           res.write(err);
           res.end();
         }
-        log.info('Facebook access token: ', facebookRes);
+        log.info('Facebook access token: ', facebookRes.access_token, '\n');
         graph.setAccessToken(facebookRes.access_token);
         events.emit('hasFbToken');
         res.writeHead(201);

@@ -13,7 +13,7 @@ var _ = require('underscore'),
 var config = require('./config');
 var configLoader = require('./config/config.loader.js');
 config = configLoader(config);
-log = log({ level: config.logger });
+log = log({ level: config.logger, logLevels: { debug: 0 } });
 
 log.info('Welcome to the tongzhi social notifier!'.red);
 log.info('----------------------------------------'.green);
@@ -50,8 +50,6 @@ var server = http.createServer(function(req, res) {
 server.listen(process.env.port || config.port || 3737);
 
 events.on('hasFbToken', function() {
-  log.silly('has token');
-
   var checkFacebook = function() {
     fbService.getUnseenLikes();
     fbService.getUnreadMessages();

@@ -36,8 +36,6 @@ SpeakerService.prototype = {
 
   sayPhrase: function(text) {
 
-    log.debug('Saying phrase: ', text);
-
     if(config.say.translate) {
       this.translate.text({ input: 'English', output: config.say.language }, text, function(err, transText) {
         if(err) {
