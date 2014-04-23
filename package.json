@@ -22,6 +22,8 @@
     "captains-log": "^0.11.7",
     "open": "0.0.5",
     "say": "^0.5.0",
-    "translate": "^0.7.0"
+    "translate": "^0.7.0",
+    "serialport": "^1.4.0",
+    "async": "^0.7.0"
   }
 }

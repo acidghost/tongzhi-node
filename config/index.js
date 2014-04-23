@@ -13,6 +13,10 @@ module.exports = {
   // Remember to change also the redirecting URLs!
   port: 3737,
 
+  arduino: {
+    serialPort: '/dev/ttyACM0'
+  },
+
   // Facebook app configurations
   facebook: {
     client_id: 'YOUR_FB_CLIENT_ID',

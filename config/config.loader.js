@@ -3,7 +3,7 @@
  */
 
 var _ = require('underscore'),
-    log = require('captains-log');
+    log = require('captains-log')();
 
 module.exports = function(config) {
 
@@ -11,7 +11,7 @@ module.exports = function(config) {
   try {
     configLocal = require('./local.js');
   } catch(err) {
-    log.warn(err);
+    log.warn('Unable to find local configuration (config/local.js)\n\n');
   }
 
   if(configLocal) {
