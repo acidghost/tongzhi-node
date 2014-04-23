@@ -91,13 +91,22 @@ events.on('hasFbToken', function() {
     });
 
     if(config.say.enabled) {
-      if(data.length > 1) {
-        spkService.sayPhrase('You have more than one person writing to you.');
-        spkService.sayPhrase('They\'ve fired ' + unreadMessages + ' message' + ((unreadMessages>1) ? ('s.') : ('.')));
-      } else {
-        spkService.sayPhrase('Someone is writing to you.');
-        spkService.sayPhrase('He has fired ' + unreadMessages + ' message' + ((unreadMessages>1) ? ('s.') : ('.')));
-      }
+      spkService.sayPhrase('You have ' + unreadMessages + ' unread message' + ((unreadMessages>1) ? ('s.') : ('.')));
+      _.each(data, function(thread, threadNum) {
+        // This removes the last 'to' user, which usually is the recipient
+        thread.to.pop();
+        var senders = '';
+        _.map(thread.to, function(sender) {
+          senders += sender.name;
+          if(thread.to.indexOf(sender) != thread.to.length-1) {
+            senders += ', ';
+          }
+        });
+        spkService.sayPhrase('Sender' + ((thread.to>1) ? ('s') : ('')) + ' of thread ' + (threadNum+1) + ': ' + senders);
+        if(thread.lastMessage) {
+          spkService.sayPhrase(thread.lastMessage[2].from.name + ' writes: ' + thread.lastMessage[2].message);
+        }
+      });
     }
   });
 });
