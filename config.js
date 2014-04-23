@@ -14,6 +14,13 @@ module.exports = {
     client_secret: 'YOUR_FB_CLIENT_SECRET',
     scope: 'manage_notifications, read_mailbox',
     redirect_uri: 'http://localhost:3737/auth/facebook'
+  },
+
+  say: {
+    enabled: true,
+    voice: 'voice_kal_diphone',
+    translate: true,
+    language: 'Italian'
   }
 
 };

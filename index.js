@@ -59,13 +59,47 @@ events.on('hasFbToken', function() {
   checkFacebook();
   setInterval(checkFacebook, 1000 * 60);
 
+  if(config.say.enabled) {
+    var SpeakerService = require('./services/speaker');
+    spkService = new SpeakerService();
+  }
+
   // This event is fired when unseen likes have been retrieved
   events.on('fbUnseenLikes', function(data) {
     log.debug('Debugging fbUnseenLikes: ', data);
+
+    if(data.length == 0)
+      return;
+
+    if(config.say.enabled) {
+      if(data.length > 1) {
+        spkService.sayPhrase('There are some new Likes on something!');
+      } else {
+        spkService.sayPhrase('There is a new Like on something of yours.');
+      }
+    }
   });
 
   // This event is fired when unread messages have been detected
   events.on('fbUnreadMessages', function(data) {
     log.debug('Debugging fbUnreadMessages: ', data);
-  })
+
+    if(data.length == 0)
+      return;
+
+    var unreadMessages = 0;
+    _.map(data, function(value) {
+      unreadMessages += value.unread;
+    });
+
+    if(config.say.enabled) {
+      if(data.length > 1) {
+        spkService.sayPhrase('You have more than one person writing to you.');
+        spkService.sayPhrase('They\'ve fired ' + unreadMessages + ' message' + ((unreadMessages>1) ? ('s.') : ('.')));
+      } else {
+        spkService.sayPhrase('Someone is writing to you.');
+        spkService.sayPhrase('He has fired ' + unreadMessages + ' message' + ((unreadMessages>1) ? ('s.') : ('.')));
+      }
+    }
+  });
 });
