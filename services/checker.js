@@ -68,7 +68,8 @@ CheckerService.prototype = {
         });
         spkService.sayPhrase('Sender' + ((thread.to>1) ? ('s') : ('')) + ' of thread ' + (threadNum+1) + ': ' + senders);
         if(config.say.readMessages && thread.lastMessage) {
-          spkService.sayPhrase(thread.lastMessage[2].from.name + ' writes: ' + thread.lastMessage[2].message);
+          var lastIndex = thread.lastMessage.length-1;
+          spkService.sayPhrase(thread.lastMessage[lastIndex].from.name + ' writes: ' + thread.lastMessage[lastIndex].message);
         }
       });
     }
