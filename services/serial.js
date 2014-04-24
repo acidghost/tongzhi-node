@@ -17,6 +17,9 @@ function SerialService(serialPort) {
     events.on('fbUnreadMessages', function(data) {
       self.drainAndSend(fbUnreadMessages, data);
     });
+    events.on('fbFriendRequests', function(data) {
+      self.drainAndSend(fbFriendRequests, data);
+    });
   });
 
   var fbUnseenLikes = function(data) {
@@ -34,6 +37,12 @@ function SerialService(serialPort) {
     log.debug('Serial write: ', msg.cyan);
     return msg;
   };
+
+  var fbFriendRequests = function(data) {
+    var msg = 'FB-friends ' + data.length;
+    log.debug('Serial write: ', msg.magenta);
+    return msg;
+  }
 
 }
 

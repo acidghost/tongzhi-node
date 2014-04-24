@@ -114,6 +114,29 @@ FacebookService.prototype = {
       }
     });
 
+  },
+
+  getFriendsNotifications: function() {
+
+    graph.get('/me/notifications?fields=application,title&include_read=false', { limit: 50 }, function (err, res) {
+      if (err) {
+        log.error(err);
+      } else {
+        var results = [];
+        for (var i in res.data) {
+          if(res.data[i].application.name == 'Friends') {
+            log.debug('Logging res.data['+i+']: ', res.data[i]);
+            results.push({
+              id: res.data[i].id,
+              title: res.data[i].title,
+              app: res.data[i].application.name
+            });
+          }
+        }
+        events.emit('fbFriendRequests', results);
+      }
+    });
+
   }
 
 };

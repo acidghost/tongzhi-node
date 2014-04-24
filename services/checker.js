@@ -12,6 +12,7 @@ function CheckerService(fbService) {
   (function checker () {
     fbService.getUnseenLikes();
     fbService.getUnreadMessages();
+    fbService.getFriendsNotifications();
     setTimeout(checker, 1000 * config.checkerRefresh);
   })();
 
@@ -25,6 +26,9 @@ function CheckerService(fbService) {
 
   // This event is fired when unread messages have been detected
   events.on('fbUnreadMessages', this.fbUnreadMessages);
+
+  // This event is fired from the FacebookService when unseen friend requests are detected
+  events.on('fbFriendRequests', this.fbFriendRequests);
 
 }
 
@@ -72,6 +76,23 @@ CheckerService.prototype = {
           spkService.sayPhrase(thread.lastMessage[lastIndex].from.name + ' writes: ' + thread.lastMessage[lastIndex].message);
         }
       });
+    }
+  },
+
+  fbFriendRequests: function(data) {
+    log.debug('Debugging fbFriendRequests: ', data);
+
+    if(data.length == 0)
+      return;
+
+    if(config.say.enabled) {
+      //spkService.sayPhrase('There '+((data.length>1) ? ('are ') : ('is '))+data.length+' notification'+((data.length>1) ? ('s') : (''))+' related to friend requests.');
+      for(var i in data) {
+        var notification = data[i];
+        var msg = notification.title;
+        msg = msg.substring(0, msg.indexOf('.')+1);
+        spkService.sayPhrase(msg);
+      }
     }
   }
 
