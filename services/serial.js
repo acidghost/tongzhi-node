@@ -47,7 +47,7 @@ SerialService.prototype = {
         log.error(err);
       } else {
         var msg = fn(data);
-        self.serialPort.write(msg, function(err) {
+        self.serialPort.write(msg+'\n', function(err) {
           if(err) {
             log.error(err);
           }
